@@ -1,0 +1,13 @@
+﻿@model automobileCar.Models.Brand
+
+@{
+    ViewBag.Title = "Brand Dropdown List";
+}
+
+<h2>Brand Dropdown List</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.DropDownList("SelectedBrand", ViewBag.BrandList as SelectList, "Select Brand", new { @class = "form-control" })
+    <input type="submit" value="Submit" class="btn btn-primary" />
+}

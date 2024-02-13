@@ -1,13 +1,16 @@
 using automobileCar.Data;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
-IServiceCollection serviceCollection = builder.Services.AddDbContext<Applicationdbcontext>(options=> 
+builder.Services.AddDbContext<Applicationdbcontext>(options => 
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+// Add services to the container.
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

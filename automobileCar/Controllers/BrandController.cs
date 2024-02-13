@@ -1,20 +1,45 @@
 ﻿using automobileCar.Data;
 using automobileCar.Models;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace automobileCar.Controllers
 {
     public class BrandController : Controller
+
     {
+        
         private readonly Applicationdbcontext _dbContext;
-        private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly Microsoft.AspNetCore.Hosting.IWebHostEnvironment _webHostEnvironment;
+        private Applicationdbcontext dbContext = new();
 
         public BrandController(Applicationdbcontext dbContext, IWebHostEnvironment webHostEnvironment)
         {
             _dbContext = dbContext;
             _webHostEnvironment = webHostEnvironment;
         }
+
+        [HttpGet]
+        public ActionResult Drop()
+        {
+            List<Brand> brands = GetBrands(); // Call your method to get brands from the database
+            ViewBag.BrandList = new SelectList(brands,"Name"); // Pass the list of brands to the view
+            return View();
+        }
+        [HttpPost]
+        private List<Brand> GetBrands()
+        {
+            // Code to fetch brands from the database
+            return dbContext.Brand.ToList(); // Assuming Brands is a DbSet<Brand> in your DbContext
+        }
+
+
 
         [HttpGet]
         public IActionResult Index()
@@ -29,25 +54,27 @@ namespace automobileCar.Controllers
         {
             return View();
         }
+
         [HttpPost]
         public IActionResult Create(Brand brand) 
         {
-            string webRootPath = _webHostEnvironment.WebRootPath; //image store and access
+            string webRootPath = _webHostEnvironment.WebRootPath; //image store and access // server path
 
-            var file = HttpContext.Request.Form.Files;
+            var file = HttpContext.Request.Form.Files; //get the file
 
             if (file.Count>0) 
+                //check for file is uploaded if it is uploaded then giving random name/id
             { 
-                string newFileName = Guid.NewGuid().ToString();
+                string newFileName = Guid.NewGuid().ToString(); //giving random name
 
                 var upload = Path.Combine(webRootPath, @"images\brand"); //creating folder
 
-                var extension = Path.GetExtension(file[0].FileName);
+                var extension = Path.GetExtension(file[0].FileName); //creating extension
 
                 using(var fileStream = new FileStream(Path.Combine(upload,newFileName+extension), FileMode.Create)) 
                 {
                     file[0].CopyTo(fileStream);
-                }
+                }//copying the file
 
                 brand.BrandLogo = @"\images\brand\" + newFileName + extension;
             }

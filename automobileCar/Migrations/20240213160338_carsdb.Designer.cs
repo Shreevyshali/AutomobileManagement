@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using automobileCar.Data;
 
@@ -11,9 +12,11 @@ using automobileCar.Data;
 namespace automobileCar.Migrations
 {
     [DbContext(typeof(Applicationdbcontext))]
-    partial class ApplicationdbcontextModelSnapshot : ModelSnapshot
+    [Migration("20240213160338_carsdb")]
+    partial class carsdb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

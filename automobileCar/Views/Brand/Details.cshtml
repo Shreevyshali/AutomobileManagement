@@ -4,7 +4,7 @@
     <div class="card-header text-center text-uppercase">
 @*         Brand Details *@
     </div>
-    <div class="card-body">
+    <div class="c">
         <div class="col-md-8">
             <div class="row">
                 <div class="col-md-4">
@@ -14,6 +14,7 @@
                     <p class="card-text">:@Model.Id</p>
                 </div>
             </div>
+
            @*  //brand name *@
             <div class="row">
                 <div class="col-md-4">
@@ -23,6 +24,7 @@
                     <p class="card-text">:@Model.Name</p>
                 </div>
             </div>
+
             @* //Established year *@
             <div class="row">
                 <div class="col-md-4">
@@ -32,6 +34,8 @@
                     <p class="card-text">:@Model.EstablishedYear</p>
                 </div>
             </div>
+
+            @*brandlogo display*@
             <div class="col-md-4">
                 <img src="@Model.BrandLogo" width="100%" />
             </div>
